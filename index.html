@@ -1,0 +1,37 @@
+<form id="form" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault()">
+	<input type="file" name="fileUpload" id="fileUpload" onchange="loadFile(event)">
+	<input class="control" type="number" min="1" max="100" value="50" name="resizeValue" onchange="generateThumb(0)">
+	<input class="control" type="range" min="1" max="100" value="50" name="resizeValue" onchange="generateThumb(1)">
+</form>
+<article id="thumb"></article>
+<article id="original"><div id="originalText"></div><img/></article>
+<script>	
+	var loadFile = function(event) {
+		document.querySelector("#originalText").innerHTML="<h2>Original</h2>";
+		var output = document.querySelector('#original img');
+		output.src = URL.createObjectURL(event.target.files[0]);
+		output.onload = function() {
+      URL.revokeObjectURL(output.src)
+  }
+};
+function generateThumb(control){
+	var controls = document.getElementsByClassName("control");
+	if(control===0){
+		controls[1].value = controls[0].value;
+	}else{
+		controls[0].value = controls[1].value;
+	}	
+	var xhttp = new XMLHttpRequest();
+	var form = document.getElementById('form');
+	data = new FormData(form);
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == XMLHttpRequest.DONE) {
+			var thumb = document.querySelector("#thumb");
+			thumb.innerHTML = xhttp.responseText;
+		}
+	}
+	xhttp.open("POST", "generateThumb.php");
+	xhttp.send(data);
+}
+</script>
+

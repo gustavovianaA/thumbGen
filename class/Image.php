@@ -60,10 +60,14 @@ private function generateThumb($dir,$file){
 	imagejpeg($newImage ,$destination . DIRECTORY_SEPARATOR . $newName, 90);	
 	imagedestroy($oldImage);
 	imagedestroy($newImage);
-
 	if(file_exists($destination . DIRECTORY_SEPARATOR . $newName)){
-			echo "<a href='" . $destination . DIRECTORY_SEPARATOR . $newName . "' download><h2>Download</h2><img src='".$destination . DIRECTORY_SEPARATOR . $newName."'></a>";  
+		echo "<a href='" . $destination . DIRECTORY_SEPARATOR . $newName . "' download><h2>Thumb: ".$this->resizeValue*100 ."%</h2><h2>Download</h2><img src='".$destination . DIRECTORY_SEPARATOR . $newName."'></a>";  
+		$img = scandir($destination);
+		foreach ($img as $name) {
+			if($name !== $newName && !in_array($name, [".",".."]))
+				unlink($destination . DIRECTORY_SEPARATOR . $name);		
 		}
+	}
 }
 
 public function __construct($name,$type,$tmpName,$error,$size,$resizeValue){
