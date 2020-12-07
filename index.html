@@ -11,27 +11,27 @@
 		var output = document.querySelector('#original img');
 		output.src = URL.createObjectURL(event.target.files[0]);
 		output.onload = function() {
-      URL.revokeObjectURL(output.src)
-  }
-};
-function generateThumb(control){
-	var controls = document.getElementsByClassName("control");
-	if(control===0){
-		controls[1].value = controls[0].value;
-	}else{
-		controls[0].value = controls[1].value;
-	}	
-	var xhttp = new XMLHttpRequest();
-	var form = document.getElementById('form');
-	data = new FormData(form);
-	xhttp.onreadystatechange = function() {
-		if (xhttp.readyState == XMLHttpRequest.DONE) {
-			var thumb = document.querySelector("#thumb");
-			thumb.innerHTML = xhttp.responseText;
+			URL.revokeObjectURL(output.src)
 		}
+	};
+	function generateThumb(control){
+		var controls = document.getElementsByClassName("control");
+		if(control===0){
+			controls[1].value = controls[0].value;
+		}else{
+			controls[0].value = controls[1].value;
+		}	
+		var xhttp = new XMLHttpRequest();
+		var form = document.getElementById('form');
+		data = new FormData(form);
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == XMLHttpRequest.DONE) {
+				var thumb = document.querySelector("#thumb");
+				thumb.innerHTML = xhttp.responseText;
+			}
+		}
+		xhttp.open("POST", "generateThumb.php");
+		xhttp.send(data);
 	}
-	xhttp.open("POST", "generateThumb.php");
-	xhttp.send(data);
-}
 </script>
 
