@@ -29,11 +29,12 @@ class Image{
 	public function setTmpName($tmpName){
 		$this->tmpName = $tmpName;
 	}
+	/* Bug on chrome
 	public function setError($error){
 		$this->error = $error;
 		if($this->error != "")
 			$this->valid=false; 
-	}
+	}*/
 	public function setSize($size){
 		$this->size = $size;
 	}
@@ -79,7 +80,7 @@ class Image{
 		$this->setName($name);
 		$this->setExt($type);
 		$this->setTmpName($tmpName);
-		$this->setError($error);
+		//$this->setError($error);
 		$this->setSize($size);
 		$this->setResizeValue($resizeValue);
 	}
